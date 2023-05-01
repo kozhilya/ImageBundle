@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults autowire="true" autoconfigure="true"/>
+
+        <prototype namespace="Kozhilya\ImageBundle\Repository\" resource="../../../src/Repository/*"/>
+        <prototype namespace="Kozhilya\ImageBundle\Controller\" resource="../../../src/Controller/*"/>
+        <prototype namespace="Kozhilya\ImageBundle\Form\" resource="../../../src/Form/*"/>
+        <prototype namespace="Kozhilya\ImageBundle\EventListener\" resource="../../../src/EventListener/*"/>
+
+        <service id="kozhilya_image.image" class="Kozhilya\ImageBundle\ImageService" public="true" shared="false">
+            <argument type="string">%kozhilya_image.config.data%</argument>
+            <argument type="service" id="router.default"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+
+        <service id="Kozhilya\ImageBundle\ImageService" alias="kozhilya_image.image" public="false"/>
+    </services>
+</container>
